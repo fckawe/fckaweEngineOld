@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<fonts>
+	<font name="default" width="10" height="16">
+		<bitmap file="small_silver.png">
+			<line chars="ABCDEFGHIJ" />
+			<line chars="KLMNOPQRST" />
+			<line chars="UVWXYZÄÖÜ " />
+			<line chars="0123456789" />
+			<line chars=".!?,;:/%=-" />
+			<line chars="_*)(#&quot;'&amp;+" />
+		</bitmap>
+	</font>
+	<font name="smallBlue" width="10" height="16">
+		<bitmap file="small_blue.png">
+			<line chars="ABCDEFGHIJ" />
+			<line chars="KLMNOPQRST" />
+			<line chars="UVWXYZÄÖÜ " />
+			<line chars="0123456789" />
+			<line chars=".!?,;:/%=-" />
+			<line chars="_*)(#&quot;'&amp;+" />
+		</bitmap>
+	</font>
+	<font name="smallRed" width="10" height="16">
+		<bitmap file="small_red.png">
+			<line chars="ABCDEFGHIJ" />
+			<line chars="KLMNOPQRST" />
+			<line chars="UVWXYZÄÖÜ " />
+			<line chars="0123456789" />
+			<line chars=".!?,;:/%=-" />
+			<line chars="_*)(#&quot;'&amp;+" />
+		</bitmap>
+	</font>
+	<font name="bigRed" width="25" height="30">
+		<bitmap file="big_red.png">
+			<line chars="ABCDEFGHIJ" />
+			<line chars="KLMNOPQRST" />
+			<line chars="UVWXYZÄÖÜa" />
+			<line chars="bcdefghijk" />
+			<line chars="lmnopqrstu" />
+			<line chars="vwxyzäöü " />
+		</bitmap>
+	</font>
+</fonts>
