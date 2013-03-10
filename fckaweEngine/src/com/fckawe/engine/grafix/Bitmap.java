@@ -1,5 +1,6 @@
 package com.fckawe.engine.grafix;
 
+import java.awt.Dimension;
 import java.util.Arrays;
 
 /**
@@ -9,9 +10,7 @@ import java.util.Arrays;
 public class Bitmap {
 
 	private final int width;
-
 	private final int height;
-
 	protected int[] pixels;
 
 	/**
@@ -39,6 +38,14 @@ public class Bitmap {
 	 */
 	public int getHeight() {
 		return height;
+	}
+	
+	/**
+	 * Returns the bitmap's dimension.
+	 * @return The dimension.
+	 */
+	public Dimension getDimension() {
+		return new Dimension(width, height);
 	}
 
 	/**

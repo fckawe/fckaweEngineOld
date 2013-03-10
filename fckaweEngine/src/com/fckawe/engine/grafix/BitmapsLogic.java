@@ -8,7 +8,7 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import com.fckawe.engine.logic.Session;
+import com.fckawe.engine.core.Session;
 
 public class BitmapsLogic {
 

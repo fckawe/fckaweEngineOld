@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<configuration>
+	<game name="The NoName-Game" />
+	<display width="800" aspectRatio="4:3" scale="1" />
+	<localization locale="DEFAULT" />
+</configuration>

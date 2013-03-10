@@ -5,6 +5,10 @@ import java.util.Map;
 
 public class Bitmaps {
 	
+	public final static String MENU_BUTTON = "MENU_BUTTON";
+	public final static String MAIN_MENU_BACKGROUND = "MAIN_MENU_BACKGROUND";
+	public final static String OPTIONS_MENU_BACKGROUND = "OPTIONS_MENU_BACKGROUND";
+	
 	private final Map<String, Bitmap[][]> bitmaps = new HashMap<String, Bitmap[][]>();
 	
 	public void clear() {

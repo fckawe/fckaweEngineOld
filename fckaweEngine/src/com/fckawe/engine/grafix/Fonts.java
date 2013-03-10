@@ -16,8 +16,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.fckawe.engine.logic.MainApplication;
-import com.fckawe.engine.logic.Session;
+import com.fckawe.engine.core.MainApplication;
+import com.fckawe.engine.core.Session;
 
 public class Fonts {
 

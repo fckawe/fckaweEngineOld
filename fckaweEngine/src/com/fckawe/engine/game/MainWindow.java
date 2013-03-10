@@ -1,4 +1,4 @@
-package com.fckawe.engine.ui;
+package com.fckawe.engine.game;
 
 import java.awt.BorderLayout;
 import java.awt.event.WindowEvent;
@@ -7,7 +7,7 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.fckawe.engine.logic.Session;
+import com.fckawe.engine.core.Session;
 
 public class MainWindow extends JFrame implements WindowListener {
 
@@ -22,6 +22,7 @@ public class MainWindow extends JFrame implements WindowListener {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(this);
+		ui.requestFocus();
 	}
 	
 	@Override

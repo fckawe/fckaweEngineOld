@@ -1,6 +1,6 @@
 package com.fckawe.engine.grafix;
 
-import com.fckawe.engine.logic.Session;
+import com.fckawe.engine.core.Session;
 
 public class FontsLogic {
 

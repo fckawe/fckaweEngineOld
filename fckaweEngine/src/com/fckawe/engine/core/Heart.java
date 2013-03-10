@@ -1,4 +1,4 @@
-package com.fckawe.engine.logic;
+package com.fckawe.engine.core;
 
 import java.util.Observable;
 

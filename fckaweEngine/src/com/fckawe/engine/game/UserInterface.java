@@ -1,21 +1,25 @@
-package com.fckawe.engine.ui;
+package com.fckawe.engine.game;
 
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.fckawe.engine.grafix.Fonts;
+import com.fckawe.engine.core.Configuration;
+import com.fckawe.engine.core.Heart;
+import com.fckawe.engine.core.Session;
 import com.fckawe.engine.grafix.Screen;
-import com.fckawe.engine.logic.Heart;
-import com.fckawe.engine.logic.Session;
 
-public class UserInterface extends Canvas implements Observer {
+public class UserInterface extends Canvas implements Observer, KeyListener {
 	
 	private static final long serialVersionUID = 8075843220995669488L;
+	
+	protected GamePart currentGamePart;
 	
 	private MainWindow mainWindow;
 	
@@ -39,21 +43,32 @@ public class UserInterface extends Canvas implements Observer {
 	
 	public void start() {
 		mainWindow = new MainWindow(this);
-		mainWindow.setTitle("Application"); // TODO: Name
+		Session session = Session.getSession();
+		Configuration cfg = session.getConfiguration();
+		mainWindow.setTitle(cfg.getGameName() + " [powered by " + session.getEngineName() + "]");
+		addKeyListener(this);
 		mainWindow.setVisible(true);
+	}
+	
+	public void exit() {
+		mainWindow.setVisible(false);
+		mainWindow.dispose();
+		Session.getSession().getMainLogger().info("User interface stopped.");
 	}
 	
 	private Dimension getUiDimension() {
 		if (uiDimension == null) {
-			int width = 800; // TODO: Configuration.DISPLAY_WIDTH;
-			int height = 600; // TODO: Configuration.DISPLAY_HEIGHT;
+			Configuration cfg = Session.getSession().getConfiguration();
+			int width = cfg.getDisplayWidth();
+			int height = cfg.getDisplayHeight();
 			uiDimension = new Dimension(width, height);
 		}
 		return uiDimension;
 	}
 	
 	private Dimension getScreenDimension(final Dimension uiDimension) {
-		screenScale = 1; // TODO: Configuration.SCREEN_SCALE;
+		Configuration cfg = Session.getSession().getConfiguration();
+		screenScale = cfg.getScreenScale();
 		if (screenScale == 1) {
 			return uiDimension;
 		}
@@ -102,7 +117,9 @@ public class UserInterface extends Canvas implements Observer {
 	protected void render() {
 		screen.clear(0);
 		
-		// TODO: render
+		if(currentGamePart != null) {
+			currentGamePart.render(screen);
+		}
 		
 		Session.getSession().getFontsLogic().draw(screen, "SMALLBLUE", "FPS:" + (int) framesPerSecond, 10, 10);
 		
@@ -130,6 +147,35 @@ public class UserInterface extends Canvas implements Observer {
 		BufferStrategy bs = getBufferStrategy();
 		if (bs != null) {
 			bs.show();
+		}
+	}
+	
+	public void setCurrentGamePart(final GamePart currentGamePart) {
+		this.currentGamePart = currentGamePart;
+	}
+	
+	public Screen getScreen() {
+		return screen;
+	}
+
+	@Override
+	public void keyPressed(final KeyEvent event) {
+		if(currentGamePart != null) {
+			currentGamePart.keyPressed(event);
+		}
+	}
+	
+	@Override
+	public void keyTyped(final KeyEvent event) {
+		if(currentGamePart != null) {
+			currentGamePart.keyTyped(event);
+		}
+	}
+
+	@Override
+	public void keyReleased(final KeyEvent event) {
+		if(currentGamePart != null) {
+			currentGamePart.keyReleased(event);
 		}
 	}
 

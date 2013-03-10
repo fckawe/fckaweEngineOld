@@ -1,4 +1,4 @@
-package com.fckawe.engine.logic;
+package com.fckawe.engine.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,20 +15,18 @@ public class Session {
 	}
 	
 	private static Session session;
-	
+	private Configuration configuration;
 	private Heart heart;
-	
 	private Fonts fonts;
-	
 	private FontsLogic fontsLogic;
-	
 	private Bitmaps bitmaps;
-	
 	private BitmapsLogic bitmapsLogic;
+	private final Lang lang = new Lang();
 	
-	public static void init(final Heart heart) {
+	public static Session newSession(final Heart heart) {
 		session = new Session(heart);
-		session.getFonts().loadFonts();
+		session.init();
+		return session;
 	}
 	
 	public static Session getSession() {
@@ -37,14 +35,23 @@ public class Session {
 	
 	private Session(final Heart heart) {
 		this.heart = heart;
-		fonts = new Fonts();
-		fontsLogic = new FontsLogic();
+	}
+	
+	protected void init() {
+		configuration = new Configuration();
 		bitmaps = new Bitmaps();
 		bitmapsLogic = new BitmapsLogic();
+		fonts = new Fonts();
+		fonts.loadFonts();
+		fontsLogic = new FontsLogic();
 	}
 	
 	public Heart getHeart() {
 		return heart;
+	}
+	
+	public Lang getLang() {
+		return lang;
 	}
 	
 	public Logger getLogger(final LoggerType type) {
@@ -53,6 +60,10 @@ public class Session {
 	
 	public Logger getMainLogger() {
 		return getLogger(LoggerType.MAIN);
+	}
+	
+	public Logger getConfigLogger() {
+		return getLogger(LoggerType.CONFIG);
 	}
 	
 	public Logger getHeartLogger() {
@@ -81,6 +92,10 @@ public class Session {
 	
 	public BitmapsLogic getBitmapsLogic() {
 		return bitmapsLogic;
+	}
+	
+	public Configuration getConfiguration() {
+		return configuration;
 	}
 
 }
