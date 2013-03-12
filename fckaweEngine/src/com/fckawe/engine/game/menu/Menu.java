@@ -1,6 +1,5 @@
 package com.fckawe.engine.game.menu;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -14,6 +13,7 @@ import com.fckawe.engine.game.menu.elements.ButtonListener;
 import com.fckawe.engine.game.menu.elements.MenuComponent;
 import com.fckawe.engine.grafix.Bitmap;
 import com.fckawe.engine.grafix.Screen;
+import com.fckawe.engine.input.Key;
 
 public abstract class Menu<R extends MenuResult> implements GamePart, ButtonListener {
 	
@@ -117,6 +117,27 @@ public abstract class Menu<R extends MenuResult> implements GamePart, ButtonList
 	
 	@Override
 	public void tick() {
+		int maxCompIdx = components.size() - 1;
+		if(Key.UP.isPressed()) {
+			Key.UP.consume();
+			activeCompIdx--;
+			if(activeCompIdx < 0) {
+				activeCompIdx = maxCompIdx;
+			}
+		} else if(Key.DOWN.isPressed()) {
+			Key.DOWN.consume();
+			activeCompIdx++;
+			if(activeCompIdx > maxCompIdx) {
+				activeCompIdx = 0;
+			}
+		} else if(Key.ENTER.isPressed()) {
+			Key.ENTER.consume();
+			MenuComponent activeComponent = components.get(activeCompIdx);
+			if(activeComponent instanceof Button) {
+				((Button)activeComponent).performClick();
+			}
+		}
+		
 		for(MenuComponent component : components) {
 			component.tick();
 		}
@@ -144,55 +165,6 @@ public abstract class Menu<R extends MenuResult> implements GamePart, ButtonList
 		return "BIGRED";
 	}
 
-	@Override
-	public void keyPressed(final KeyEvent event) {
-		int keyCode = event.getKeyCode();
-		int keyCodeNew;
-		
-		switch(keyCode) {
-		case KeyEvent.VK_ENTER:
-			// TODO: bei Text inputs nach unten springen...
-			keyCodeNew = keyCode;
-			break;
-		default:
-			keyCodeNew = keyCode;
-		}
-		
-		int maxCompIdx = components.size() - 1;
-		
-		switch(keyCodeNew) {
-		case KeyEvent.VK_UP:
-			activeCompIdx--;
-			if(activeCompIdx < 0) {
-				activeCompIdx = maxCompIdx;
-			}
-			break;
-		case KeyEvent.VK_DOWN:
-			activeCompIdx++;
-			if(activeCompIdx > maxCompIdx) {
-				activeCompIdx = 0;
-			}
-			break;
-		case KeyEvent.VK_ENTER:
-			event.consume();
-			MenuComponent activeComponent = components.get(activeCompIdx);
-			if(activeComponent instanceof Button) {
-				((Button)activeComponent).performClick();
-			}
-			break;
-		}
-	}
-	
-	@Override
-	public void keyTyped(final KeyEvent event) {
-		// nothing to do
-	}
-
-	@Override
-	public void keyReleased(final KeyEvent event) {
-		// nothing to do
-	}
-	
 	public void buttonClicked(final Button button) {
 		R result = createResult(button);
 		q.offer(result);

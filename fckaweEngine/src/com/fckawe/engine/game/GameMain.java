@@ -126,6 +126,7 @@ public class GameMain implements Observer {
 			switch(event) {
 			case TICK:
 				if(currentGamePart != null) {
+					ui.tick();
 					currentGamePart.tick();
 				}
 				break;

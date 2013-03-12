@@ -1,6 +1,8 @@
 package com.fckawe.engine.game;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -13,7 +15,14 @@ public class MainWindow extends JFrame implements WindowListener {
 
 	private static final long serialVersionUID = -2039970114154356523L;
 	
-	public MainWindow(final UserInterface ui) {
+    public MainWindow(final UserInterface ui) {
+    	String appIcon = Session.getSession().getConfiguration().getAppIcon();
+    	if(appIcon != null) {
+    		Toolkit tk = Toolkit.getDefaultToolkit();
+    		Image img = tk.createImage(ClassLoader.getSystemResource(appIcon));
+    		setIconImage(img);
+    	}
+    	
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(ui);
 		setContentPane(panel);

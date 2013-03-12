@@ -28,9 +28,7 @@ public class MainApplication implements Heart.ExitListener {
 	}
 	
 	protected void startHeart(final Heart heart) {
-		Thread thread = new Thread(heart);
-		thread.setName("Heart#" + Session.getSession().getEngineName());
-		thread.start();
+		heart.start();
 	}
 	
 	@Override

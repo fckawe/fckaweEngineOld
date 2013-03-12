@@ -22,6 +22,7 @@ public class Configuration {
 	private AspectRatio aspectRatio = AspectRatio.W4H3;
 	private short screenScale = 1;
 	private Locale locale = Locale.getDefault();
+	private String appIcon;
 	
 	public String getGameName() {
 		return gameName;
@@ -37,6 +38,10 @@ public class Configuration {
 	
 	public short getScreenScale() {
 		return screenScale;
+	}
+	
+	public String getAppIcon() {
+		return appIcon;
 	}
 
 	private enum AspectRatio {
@@ -71,11 +76,9 @@ public class Configuration {
 
 	private class Loader extends DefaultHandler {
 
-		private String elementValue;
-		private boolean inElement;
-
+		// private String elementValue;
+		// private boolean inElement;
 		private boolean displayHeightCalculated;
-
 		private Logger logger;
 		
 		private void load() {
@@ -102,10 +105,10 @@ public class Configuration {
 		@Override
 		public void characters(final char[] cBuf, final int offset,
 				final int len) throws SAXException {
-			if (inElement) {
-				String str = new String(cBuf, offset, len);
-				elementValue += str;
-			}
+			// if (inElement) {
+			//	String str = new String(cBuf, offset, len);
+			//	elementValue += str;
+			// }
 		}
 
 		@Override
@@ -124,8 +127,11 @@ public class Configuration {
 				case LOCALIZATION:
 					takeLocalizationAttributes(attributes);
 					break;
+				case APPLICATION:
+					takeApplicationAttributes(attributes);
+					break;
 				default:
-					inElement = true;
+					// inElement = true;
 					break;
 				}
 			}
@@ -139,6 +145,9 @@ public class Configuration {
 				case NAME:
 					gameName = attributes.getValue(qName);
 					logger.info(" Game: " + gameName);
+					break;
+				default:
+					// nothing to do
 					break;
 				}
 			}
@@ -163,6 +172,9 @@ public class Configuration {
 				case SCALE:
 					screenScale = getShortAttribute(attributes, qName);
 					logger.info(" Screen scale: " + screenScale);
+					break;
+				default:
+					// nothing to do
 					break;
 				}
 			}
@@ -210,6 +222,24 @@ public class Configuration {
 						locale = new Locale(parts[0], parts[1]);
 					}
 					break;
+				default:
+					// nothing to do
+					break;
+				}
+			}
+		}
+
+		private void takeApplicationAttributes(final Attributes attributes) {
+			for (int i = 0; i < attributes.getLength(); i++) {
+				String qName = attributes.getQName(i);
+				XmlAttribute attr = XmlAttribute.getByName(qName);
+				switch (attr) {
+				case ICON:
+					appIcon = attributes.getValue(qName);
+					break;
+				default:
+					// nothing to do
+					break;
 				}
 			}
 		}
@@ -252,20 +282,21 @@ public class Configuration {
 		@Override
 		public void endElement(final String uri, final String localName,
 				final String qName) throws SAXException {
-			XmlElement element = XmlElement.getByName(qName);
+			// XmlElement element = XmlElement.getByName(qName);
 
-			if (element != null) {
+			// if (element != null) {
 				// nothing to do, yet
-			}
+			// }
 
-			elementValue = "";
-			inElement = false;
+			// elementValue = "";
+			// inElement = false;
 		}
 
 	}
 
 	private enum XmlElement {
-		GAME("game"), DISPLAY("display"), LOCALIZATION("localization");
+		GAME("game"), DISPLAY("display"), LOCALIZATION("localization"),
+			APPLICATION("application");
 
 		private String name;
 
@@ -286,7 +317,7 @@ public class Configuration {
 
 	private enum XmlAttribute {
 		NAME("name"), WIDTH("width"), ASPECT_RATIO("aspectRatio"),
-			SCALE("scale"), LOCALE("locale");
+			SCALE("scale"), LOCALE("locale"), ICON("icon");
 
 		private String name;
 

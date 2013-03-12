@@ -32,7 +32,6 @@ public class Heart extends Observable implements Runnable {
 
 	// number of rendered frames in an interval
 	private int frameCountPerStatCycle = 0;
-	private long totalFrameCount = 0l;
 	// the last FPS values
 	private double fpsStore[];
 	// the number of times the stat has been read
@@ -47,6 +46,11 @@ public class Heart extends Observable implements Runnable {
 	public Heart(final ExitListener exitListener) {
 		this.exitListener = exitListener;
 		exitRequested = false;
+	}
+	
+	public void start() {
+		Thread thread = new Thread(this, Session.getSession().getEngineName() + ":Heart");
+		thread.start();
 	}
 	
 	@Override
@@ -133,7 +137,6 @@ public class Heart extends Observable implements Runnable {
 	 */
 	private void storeStats() {
 		frameCountPerStatCycle++;
-		totalFrameCount++;
 
 		// check the actual time
 		statusIntervalTimer += (System.currentTimeMillis() - statusIntervalTimer);

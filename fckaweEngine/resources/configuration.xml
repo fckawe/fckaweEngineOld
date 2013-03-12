@@ -3,4 +3,5 @@
 	<game name="The NoName-Game" />
 	<display width="800" aspectRatio="4:3" scale="1" />
 	<localization locale="DEFAULT" />
+	<application icon="images/icon.png" />
 </configuration>

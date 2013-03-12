@@ -4,8 +4,6 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.util.Observable;
 import java.util.Observer;
@@ -14,21 +12,21 @@ import com.fckawe.engine.core.Configuration;
 import com.fckawe.engine.core.Heart;
 import com.fckawe.engine.core.Session;
 import com.fckawe.engine.grafix.Screen;
+import com.fckawe.engine.input.InputHandler;
 
-public class UserInterface extends Canvas implements Observer, KeyListener {
+public class UserInterface extends Canvas implements Observer {
 	
 	private static final long serialVersionUID = 8075843220995669488L;
 	
 	protected GamePart currentGamePart;
 	
 	private MainWindow mainWindow;
-	
 	private final Screen screen;
 	private int screenScale;
-	
 	private Dimension uiDimension;
-	
 	private double framesPerSecond;
+	
+	private InputHandler inputHandler;
 	
 	public UserInterface() {
 		Dimension uiDimension = getUiDimension();
@@ -46,7 +44,8 @@ public class UserInterface extends Canvas implements Observer, KeyListener {
 		Session session = Session.getSession();
 		Configuration cfg = session.getConfiguration();
 		mainWindow.setTitle(cfg.getGameName() + " [powered by " + session.getEngineName() + "]");
-		addKeyListener(this);
+		inputHandler = new InputHandler();
+		addKeyListener(inputHandler);
 		mainWindow.setVisible(true);
 	}
 	
@@ -157,26 +156,9 @@ public class UserInterface extends Canvas implements Observer, KeyListener {
 	public Screen getScreen() {
 		return screen;
 	}
-
-	@Override
-	public void keyPressed(final KeyEvent event) {
-		if(currentGamePart != null) {
-			currentGamePart.keyPressed(event);
-		}
-	}
 	
-	@Override
-	public void keyTyped(final KeyEvent event) {
-		if(currentGamePart != null) {
-			currentGamePart.keyTyped(event);
-		}
-	}
-
-	@Override
-	public void keyReleased(final KeyEvent event) {
-		if(currentGamePart != null) {
-			currentGamePart.keyReleased(event);
-		}
+	public void tick() {
+		inputHandler.tick();
 	}
 
 }

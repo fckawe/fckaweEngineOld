@@ -1,10 +1,8 @@
 package com.fckawe.engine.game;
 
-import java.awt.event.KeyListener;
-
 import com.fckawe.engine.grafix.Screen;
 
-public interface GamePart extends KeyListener {
+public interface GamePart {
 	
 	public void tick();
 	
